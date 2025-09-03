@@ -1,0 +1,4 @@
+venv/
+PREDICT_MLOPS.egg-info/
+logs/
+notebook/*.pkl

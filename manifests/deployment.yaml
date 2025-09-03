@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlops-predict
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mlops-predict
+  template:
+    metadata:
+      labels:
+        app: mlops-predict
+    spec:
+      containers:
+      - name: mlops-predict
+        image: 
+        ports:
+        - containerPort: 5000
