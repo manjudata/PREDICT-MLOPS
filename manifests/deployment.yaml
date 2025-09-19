@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: mlops-predict
-        image: 
+        image: manjudata/predicthub:latest
         ports:
         - containerPort: 5000
