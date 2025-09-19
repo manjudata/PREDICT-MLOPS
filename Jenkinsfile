@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script{
                     echo 'Building Docker image...'
-                    dockerImage = docker.Build("${DOCKER_HUB_REPO}:latest")
+                    dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
         }
