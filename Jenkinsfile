@@ -43,16 +43,19 @@ pipeline {
         }
         stage('Apply Kubernetes & Sync App with ArgoCD') {
             steps {
-                script{
-                    kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://192.168.49.2:8443') {
-                        sh'''
-                        argocd login 34.121.241.126:30135 --username admin --password $(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --insecure
-                        argocd app sync gitopsapp
-                        '''
-                    }
+                withCredentials([string(credentialsId: 'argocd-token', variable: 'ARGO_TOKEN')]) {
+                sh '''#!/usr/bin/env bash
+                set -eu
+                 export ARGOCD_SERVER="34.121.241.126:30135"
+                 export ARGOCD_AUTH_TOKEN="$ARGO_TOKEN"
+                 ARGS="--insecure --grpc-web"
+                 
+                 # No interactive login; the token is used on each command
+                 argocd $ARGS app sync gitopsapp
+                 argocd $ARGS app wait gitopsapp --health --sync
+                 '''
                 }
             }
         }
     }
 }
-
