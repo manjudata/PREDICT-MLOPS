@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Check Argo token credential') {
             steps {
-            withCredentials([string(credentialsId: 'argocd-token', variable: 'ARGO_TOKEN')]) {
+            withCredentials([string(credentialsId: 'gitops-dockerhub-token', variable: 'ARGO_TOKEN')]) {
             sh 'echo "ARGO token available"'
              }
            }
@@ -51,7 +51,7 @@ pipeline {
 
         stage('Apply Kubernetes & Sync App with ArgoCD') {
             steps {
-                withCredentials([string(credentialsId: 'argocd-token', variable: 'ARGO_TOKEN')]) {
+                withCredentials([string(credentialsId: 'gitops-dockerhub-token', variable: 'ARGO_TOKEN')]) {
                 sh '''#!/usr/bin/env bash
                 set -eu
                  export ARGOCD_SERVER="34.121.241.126:30135"
